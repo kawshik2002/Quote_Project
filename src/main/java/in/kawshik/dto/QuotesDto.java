@@ -3,22 +3,23 @@ package in.kawshik.dto;
 public class QuotesDto {
 	
 	
-private String quote;
+private String text;
 
 private String author;
 
+
 /**
- * @return the quote
+ * @return the text
  */
-public String getQuote() {
-	return quote;
+public String getText() {
+	return text;
 }
 
 /**
- * @param quote the quote to set
+ * @param text the text to set
  */
-public void setQuote(String quote) {
-	this.quote = quote;
+public void setText(String text) {
+	this.text = text;
 }
 
 /**

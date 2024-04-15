@@ -1,20 +1,17 @@
 package in.kawshik.service;
 
-import java.beans.Beans;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+import java.util.Random;
 
+//import org.hibernate.mapping.Map;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import in.kawshik.dto.LoginDto;
@@ -30,8 +27,8 @@ import in.kawshik.repo.CityRepo;
 import in.kawshik.repo.CountryRepo;
 import in.kawshik.repo.StateRepo;
 import in.kawshik.repo.UserDtlsRepo;
-
-import in.kawshik.utils.*;
+import in.kawshik.utils.EmailSender;
+import in.kawshik.utils.PasswordGen;
 import jakarta.mail.MessagingException;
 
 @Service
@@ -90,18 +87,23 @@ public class UserServiceImpl implements IUserService {
 		
 		return cHashMap;
 	}
-
+	
+	
+	
 	@Override
 	public UserDto getUser(String email) {
-		
-		User user = userRepo.findByEmail(email);
-		
+		User user = userRepo.findByEmail(email);	
 		ModelMapper map = new ModelMapper();
 		UserDto userDto = map.map(user,UserDto.class);
 		
 		return userDto;
+		
 	}
 	
+	
+
+
+//	
 	
 
 	@Override
@@ -151,8 +153,10 @@ public class UserServiceImpl implements IUserService {
 			return null;
 		}
 		
-		ModelMapper model = new ModelMapper();
-		UserDto map = model.map(user, UserDto.class);
+//		ModelMapper model = new ModelMapper();
+		 ModelMapper modelMapper = new ModelMapper();
+		 
+		UserDto map = modelMapper.map(user, UserDto.class);
 		
 		return map;
 		
@@ -177,7 +181,7 @@ public class UserServiceImpl implements IUserService {
 
 	        return false;
 	    }
-//		return false;
+//	
 	
 
 
@@ -199,12 +203,22 @@ public class UserServiceImpl implements IUserService {
 		
 		try {
 			quotes = objectMapper.readValue(body, QuotesDto[].class);
+			
 		
 		} catch (Exception e) {
 			e.printStackTrace();
+			return "Failed to retrive quote";
 		}
-		return quotes[0].getQuote();
+		
+		Random r = new Random();
+		int nextInt = r.nextInt(quotes.length - 1);
+		return quotes[nextInt].getText();
+
 	}
+
+	
+
+
 
 
 

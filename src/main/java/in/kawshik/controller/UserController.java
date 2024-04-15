@@ -49,7 +49,7 @@ public class UserController {
 	}
 
 	@PostMapping("/register")
-	public String register(@ModelAttribute("regObj") User u,RegisterDto regDto,Model m) {
+	public String register(User u,RegisterDto regDto,Model m) {
 		
 		boolean registerUser = userService.registerUser(regDto);
 		if(registerUser) {
@@ -73,7 +73,7 @@ public class UserController {
 	}
 
 	@PostMapping("/login")
-	public String login(@ModelAttribute("loginObj") LoginDto u,LoginDto loginDto, Model model) {
+	public String login(LoginDto loginDto, Model model) {
 		
 		UserDto user = userService.getUser(loginDto);
 		
@@ -83,9 +83,11 @@ public class UserController {
 		}
 		
 			if(user.isPwdUpdated()) {
-				return "redirect:/dashboard";
+				return "redirect:dashboard";
 			}else if(!user.isPwdUpdated()) {
-				model.addAttribute("restObj", new ResetPwdDto());
+				ResetPwdDto formObj = new ResetPwdDto();
+				formObj.setEmail(user.getEmail());
+				model.addAttribute("resetObj", formObj);
 				return "resetPassword";
 			
 		}
@@ -93,13 +95,13 @@ public class UserController {
 	}
 
 	@PostMapping("/resetPwd")
-	public String resetPwd(ResetPwdDto pwdDto,Model m) {
+	public String resetPwd(@ModelAttribute("resetObj")ResetPwdDto pwdDto,Model m) {
 		if(!(pwdDto.getConPwd().equals(pwdDto.getNewPwd()))){
 			m.addAttribute("emsg", "confirm Password and new password  must be some ");
 			return "resetPassword";
 		}
 		UserDto user = userService.getUser(pwdDto.getEmail());
-		if(user.getPwd().equals(pwdDto.getOldPwd())) {
+		if(user!=null&& user.getPwd().equals(pwdDto.getOldPwd())) {
 			boolean resetPwd = userService.resetPwd(pwdDto);
 			if(resetPwd) {
 				return "redirect:dashboard";
@@ -117,8 +119,13 @@ public class UserController {
 	@GetMapping("/dashboard")
 	public String dashboard(Model model) {
 		String quote=userService.getQuote();
-		model.addAttribute("quote", quote);
-		return "dashboardView";
+		if(quote!=null && !quote.isEmpty()) {
+			model.addAttribute("quote", quote);
+		}else {
+			model.addAttribute("emsg", "Failed to retirev a quote");
+		}
+		
+		return "dashboard";
 	}
 
 	@GetMapping("/login")

@@ -19,12 +19,12 @@ public class UserDto {
 		
 		private Long phno;
 		
-	    private Integer country;
+	    private Integer country_id;
 	    
-	    private Integer state;
+	    private Integer state_id;
 	    
 	 
-	    private Integer city;
+	    private Integer city_id;
 	
 	private boolean pwdUpdated;
 
@@ -120,52 +120,54 @@ public class UserDto {
 
 
 		/**
-		 * @return the country
+		 * @return the country_id
 		 */
-		public Integer getCountry() {
-			return country;
+		public Integer getCountry_id() {
+			return country_id;
 		}
 
 
 		/**
-		 * @param country the country to set
+		 * @param country_id the country_id to set
 		 */
-		public void setCountry(Integer country) {
-			this.country = country;
+		public void setCountry_id(Integer country_id) {
+			this.country_id = country_id;
 		}
 
 
 		/**
-		 * @return the state
+		 * @return the state_id
 		 */
-		public Integer getState() {
-			return state;
+		public Integer getState_id() {
+			return state_id;
 		}
 
 
 		/**
-		 * @param state the state to set
+		 * @param state_id the state_id to set
 		 */
-		public void setState(Integer state) {
-			this.state = state;
+		public void setState_id(Integer state_id) {
+			this.state_id = state_id;
 		}
 
 
 		/**
-		 * @return the city
+		 * @return the city_id
 		 */
-		public Integer getCity() {
-			return city;
+		public Integer getCity_id() {
+			return city_id;
 		}
 
 
 		/**
-		 * @param city the city to set
+		 * @param city_id the city_id to set
 		 */
-		public void setCity(Integer city) {
-			this.city = city;
+		public void setCity_id(Integer city_id) {
+			this.city_id = city_id;
 		}
-		
+
+
+				
 		
 	
 		
