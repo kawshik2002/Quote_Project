@@ -1,0 +1,33 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: JRTP-Mini-Project-02
+  datasource:
+    password: password
+    url: jdbc:mysql://localhost:3306/springjdbc
+    username: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  mail:
+    host: smtp.gmail.com
+    password: kckh wrno kito hqkj
+    port: 587
+    properties:
+      mail:
+        debug: true
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    username: kawshikgoud2018@gmail.com
+
+
+app:
+ messages:
+  sucMsg: Registration Succesfull
+  eMsg: Something went wrong
+  passMissMatch: confirm Password and new password  must be some 
+  quoteError: Failed to retirev a quote
